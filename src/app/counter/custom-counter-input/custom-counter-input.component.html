@@ -1,4 +1,9 @@
 <div>
-    <input type="text" placeholder="Enter Value">
-    <button class="btn btn-black">Add to counter</button>
+    <div class="my-3">{{projectName}}</div>
+    <input type="text" placeholder="Enter Value" [(ngModel)]="value">&nbsp;
+    <button class="btn btn-secondary" (click)="onAdd()">Add to counter</button>
+</div>
+
+<div>
+    <button class="btn btn-light" (click)="onChangeProjectName()"></button>
 </div>
