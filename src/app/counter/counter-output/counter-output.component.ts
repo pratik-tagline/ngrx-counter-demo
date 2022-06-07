@@ -11,7 +11,7 @@ import { CounterState } from '../state/counter.state';
 })
 export class CounterOutputComponent implements OnInit {
   // @Input() counter;
-  counter: number;
+  counter$: Observable<number>;
   // counter$: Observable<{counter: number}>;
   // counterSubscription: Subscription
 
@@ -23,11 +23,12 @@ export class CounterOutputComponent implements OnInit {
     // })
 
     // this.counter$ = this.store.select('counter');
-    this.store.select(getCounter).subscribe((data) => {
-      console.log('counter observable called');
+    this.counter$ = this.store.select(getCounter);
+    // .subscribe((data) => {
+    //   console.log('counter observable called');
 
-      this.counter = data;
-    });
+    //   this.counter = data;
+    // });
   }
 
   // ngOnDestroy(): void {
