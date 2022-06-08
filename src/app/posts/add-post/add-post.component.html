@@ -1,0 +1,62 @@
+<div class="row my-4">
+  <div class="col-md-12">
+    <h3>Add Post</h3>
+    <hr />
+    <form [formGroup]="postForm" (ngSubmit)="onAddPost()">
+      <div class="mb-3" class="form-group">
+        <label>Title</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="title"
+          [ngClass]="{
+            'is-invalid': postFormSubmitted && postFormVal['title'].errors
+          }"
+        />
+
+        <div
+          *ngIf="postFormSubmitted && postFormVal['title'].errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="postFormVal['title'].errors['required']">
+            Title is required
+          </div>
+          <div *ngIf="postFormVal['title'].errors['minLength']">
+            Title should be minimum 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label>Description</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          [ngClass]="{
+            'is-invalid': postFormSubmitted && postFormVal['description'].errors
+          }"
+        ></textarea>
+        <div
+          *ngIf="postFormSubmitted && postFormVal['description'].errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="postFormVal['description'].errors['required']">
+            Description is required
+          </div>
+          <div *ngIf="postFormVal['description'].errors['minLength']">
+            Description should be minimum 10 characters
+          </div>
+        </div>
+      </div>
+
+      <div class="my-3">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!postForm.valid"
+        >
+          Add Post
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
