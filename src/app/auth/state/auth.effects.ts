@@ -9,7 +9,12 @@ import {
   setErrorMessage,
   setLoadingSpinner,
 } from 'src/app/store/shared/shared.action';
-import { loginStart, loginSuccess } from './auth.actions';
+import {
+  loginStart,
+  loginSuccess,
+  signupStart,
+  signupSuccess,
+} from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -29,6 +34,28 @@ export class AuthEffects {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             const user = this.authService.formatUser(data);
             return loginSuccess({ user });
+          }),
+          catchError((errResp) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const errorMessage = this.authService.getErrorMessage(
+              errResp.error.error.message
+            );
+            return of(setErrorMessage({ message: errorMessage }));
+          })
+        );
+      })
+    );
+  });
+
+  signUp$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(signupStart),
+      exhaustMap((action) => {
+        return this.authService.signUp(action.email, action.password).pipe(
+          map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const user = this.authService.formatUser(data);
+            return signupSuccess({ user });
           }),
           catchError((errResp) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
